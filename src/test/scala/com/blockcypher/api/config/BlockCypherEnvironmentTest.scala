@@ -14,9 +14,9 @@ class BlockCypherEnvironmentTest extends FlatSpec with MustMatchers with BlockCy
   }
 
   it must "build a correct web hook url" in {
-    val expectedUrl = "https://api.blockcypher.com/v1/btc/main/hooks?token=YOURTOKEN"
+    val expectedUrl = "https://api.blockcypher.com/v1/btc/main/hooks?token="
 
-    webHooks("YOURTOKEN") must be (expectedUrl)
+    webHooks must be (expectedUrl)
   }
 
 }

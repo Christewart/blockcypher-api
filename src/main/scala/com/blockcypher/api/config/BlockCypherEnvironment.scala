@@ -5,6 +5,7 @@ package com.blockcypher.api.config
  */
 trait BlockCypherEnvironment {
 
+  private def token = ???
   private def blockCypherUrl = "https://api.blockcypher.com/"
   def version = "v1/"
   def coin : String
@@ -12,9 +13,7 @@ trait BlockCypherEnvironment {
 
   def baseUrl = blockCypherUrl + version + coin + network
 
-  def webHooks(token : String) = baseUrl + "/hooks?token=" + token
-
-
+  def webHooks = baseUrl + "/hooks?token="+ token
 }
 
 
