@@ -5,7 +5,7 @@ package com.blockcypher.api.config
  */
 trait BlockCypherEnvironment {
 
-  def token = "bf678aeee7389499b233fa9cc351582c"
+  def token = ???
   private def blockCypherUrl = "https://api.blockcypher.com/"
   def version = "v1/"
   def coin : String
