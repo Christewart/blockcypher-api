@@ -21,7 +21,8 @@ class BlockCypherEventProtocolTest extends FlatSpec with MustMatchers {
       |  "callback_errors": 0,
       |  "address": "15qx9ug952GWGTNn7Uiv6vode4RcGrRemh",
       |  "event": "unconfirmed-tx",
-      |  "filter": "addr=15qx9ug952GWGTNn7Uiv6vode4RcGrRemh\u0026event=unconfirmed-tx"
+      |  "filter": "addr=15qx9ug952GWGTNn7Uiv6vode4RcGrRemh\u0026event=unconfirmed-tx",
+      |  "confirmations":3
       |}
     """.stripMargin
   "BlockCypherEventProtocol" must "parse a blockcypher event object" in {
@@ -31,5 +32,6 @@ class BlockCypherEventProtocolTest extends FlatSpec with MustMatchers {
     event.token must be (Some("bf678aeee7389499b233fa9cc351582c"))
     event.address must be (Some(BitcoinAddress("15qx9ug952GWGTNn7Uiv6vode4RcGrRemh")))
     event.event must be ("unconfirmed-tx")
+    event.confirmations must be (Some(3))
   }
 }

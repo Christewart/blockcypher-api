@@ -20,12 +20,23 @@ class BlockCypherEventApiTest extends FlatSpec with MustMatchers
     val event = BlockCypherEventImpl(None,"unconfirmed-tx",None, None, None,
       Some(BitcoinAddress("15qx9ug952GWGTNn7Uiv6vode4RcGrRemh")),None,None,None,Some("https://my.domain.com/callbacks/new-tx"),0)
 
-    val result : Future[BlockCypherEvent] = txConfirmation(event)
+    val result : Future[BlockCypherEvent] = sendEvent(event)
 
     whenReady(result, timeout( 5 seconds), interval(5 millis)) { event =>
       event.address must be (Some(TestUtil.bitcoinAddress))
       event.url must be (Some("https://my.domain.com/callbacks/new-tx"))
       event.event must be ("unconfirmed-tx")
+
+    }
+  }
+
+  it must "notify us when an address transaction receives another confirmation" in {
+    val address = BitcoinAddress("15qx9ug952GWGTNn7Uiv6vode4RcGrRemh")
+    val result : Future[BlockCypherEvent] = txConfirmation(address)
+
+    whenReady(result, timeout(5 seconds), interval(5 millis)) { event =>
+      event.address must be (Some(address))
+      event.confirmations must be (Some(3))
 
     }
   }

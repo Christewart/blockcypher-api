@@ -15,6 +15,7 @@ import scala.concurrent.Future
 trait BlockCypherEventApi { this : BlockCypherEnvironment with ActorSystemConfig =>
   import actorSystem._
 
+  def callBackUrl = Some("https://my.domain.com/callbacks/new-tx")
   /**
    * Simplifies listening to confirmations on all transactions for a given address up to a provided threshold. S
    * ends first the unconfirmed transaction and then the transaction for each confirmation.
@@ -24,7 +25,19 @@ trait BlockCypherEventApi { this : BlockCypherEnvironment with ActorSystemConfig
    * @param tx
    * @return
    */
-  def txConfirmation(event : BlockCypherEventImpl) = {
+  def txConfirmation(address : BitcoinAddress, numberOfConfirmations : Int = 3) : Future[BlockCypherEvent] = {
+    val event = BlockCypherEventImpl(None,"tx-confirmation",None,None,Some(token),Some(address),
+      Some(numberOfConfirmations),None,None,callBackUrl,0)
+    sendEvent(event)
+  }
+
+
+  /**
+   * Sends the event to blockcypher and returns the response
+   * @param event
+   * @return
+   */
+  def sendEvent(event : BlockCypherEventImpl) = {
     import BlockCypherEventProtocol._
     val pipeline: HttpRequest => Future[BlockCypherEventImpl] = sendReceive ~> unmarshal[BlockCypherEventImpl]
     pipeline(Post(webHooks,event))

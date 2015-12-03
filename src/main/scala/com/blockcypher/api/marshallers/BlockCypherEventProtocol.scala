@@ -26,7 +26,7 @@ object BlockCypherEventProtocol extends DefaultJsonProtocol {
     val tokenKey = "token"
     val addressKey = "address"
     val confirmationsKey = "confirmations"
-    val confidenceKey = "confidenceKey"
+    val confidenceKey = "confidence"
     val scriptKey = "scriptKey"
     val urlKey = "url"
     val callBackErrorsKey="callback_errors"
@@ -39,11 +39,10 @@ object BlockCypherEventProtocol extends DefaultJsonProtocol {
       val id = parseString(obj.fields.getOrElse(idKey,JsNull))
       val hash = parseString(obj.fields.getOrElse(hashKey, JsNull))
       val walletName = parseString(obj.fields.getOrElse(walletNameKey,JsNull))
-
       val token = parseString(obj.fields.getOrElse(tokenKey,JsNull))
       val parsedAddress = parseString(obj.fields.getOrElse(addressKey,JsNull))
       val address : Option[BitcoinAddress] = if (parsedAddress.isDefined) Some(BitcoinAddress(parsedAddress.get)) else None
-      val confirmations = parseInt(obj.fields.getOrElse(confidenceKey,JsNull))
+      val confirmations = parseInt(obj.fields.getOrElse(confirmationsKey,JsNull))
       val confidence = parseFloat(obj.fields.getOrElse(confidenceKey,JsNull))
       val url = parseString(obj.fields.getOrElse(urlKey,JsNull))
       val script = parseString(obj.fields.getOrElse(scriptKey,JsNull))
