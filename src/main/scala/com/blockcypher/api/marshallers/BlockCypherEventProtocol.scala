@@ -31,7 +31,7 @@ object BlockCypherEventProtocol extends DefaultJsonProtocol {
     val urlKey = "url"
     val callBackErrorsKey="callback_errors"
 
-    override def read(value : JsValue) = {
+    override def read(value : JsValue) : BlockCypherEventImpl = {
       val obj = value.asJsObject
       val Seq(event,callbackErrors) = obj.getFields(
         eventKey, callBackErrorsKey

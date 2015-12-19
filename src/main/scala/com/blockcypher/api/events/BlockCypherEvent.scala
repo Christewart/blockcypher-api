@@ -17,7 +17,6 @@ trait BlockCypherEvent {
   def script : Option[String]
   def url : Option[String]
   def callbackErrors : Int
-
 }
 
 case class BlockCypherEventImpl(override val id : Option[String], override val event : String, override val hash : Option[String],

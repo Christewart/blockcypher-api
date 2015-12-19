@@ -15,10 +15,10 @@ import scala.concurrent.Future
 trait BlockCypherEventApi { this : BlockCypherEnvironment with ActorSystemConfig =>
   import actorSystem._
 
-  def callBackUrl = Some("https://my.domain.com/callbacks/new-tx")
+  def callBackUrl = Some("http://test.extrapoint.io/callbacks/new-tx")
   /**
-   * Simplifies listening to confirmations on all transactions for a given address up to a provided threshold. S
-   * ends first the unconfirmed transaction and then the transaction for each confirmation.
+   * Simplifies listening to confirmations on all transactions for a given address up to a provided threshold.
+   * Sends first the unconfirmed transaction and then the transaction for each confirmation.
    * Use the confirmations property within the Event to manually specify the number of confirmations desired
    * (maximum 10, defaults to 6).
    * The payload is a TX.
