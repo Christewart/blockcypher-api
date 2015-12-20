@@ -9,12 +9,14 @@ trait BlockCypherInput {
   def prevHash : String
   def outputIndex : Int
   def outputValue : Long
+  def script : String
   def sequence : Long
   def addresses : Seq[BitcoinAddress]
   def scriptType : String
 }
 
 case class BlockCypherInputImpl(override val prevHash : String, override val outputIndex : Int,
-                                 override val outputValue : Long, override val sequence : Long,
-                                 override val addresses : Seq[BitcoinAddress], override val scriptType : String)
+                                override val outputValue : Long, override val script : String,
+                                override val sequence : Long,
+                                override val addresses : Seq[BitcoinAddress], override val scriptType : String)
   extends BlockCypherInput

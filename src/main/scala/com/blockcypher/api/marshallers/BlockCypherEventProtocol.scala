@@ -62,7 +62,7 @@ object BlockCypherEventProtocol extends DefaultJsonProtocol {
         hashKey -> (if(event.hash.isDefined) JsString(event.hash.get) else JsNull),
         walletNameKey -> (if(event.walletName.isDefined) JsString(event.walletName.get) else JsNull),
         tokenKey -> (if(event.token.isDefined) JsString(event.token.get) else JsNull),
-        addressKey -> (if (event.address.isDefined) JsString(event.address.get.bitcoinAddress) else JsNull),
+        addressKey -> (if (event.address.isDefined) JsString(event.address.get.value) else JsNull),
         confirmationsKey -> (if(event.confirmations.isDefined) JsNumber(event.confirmations.get) else JsNull),
         confidenceKey -> (if(event.confidence.isDefined) JsNumber(event.confidence.get) else JsNull),
         scriptKey -> (if(event.script.isDefined) JsString(event.script.get) else JsNull),
