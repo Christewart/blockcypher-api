@@ -2,6 +2,7 @@ package com.blockcypher.api.marshallers
 
 import com.blockcypher.api.protocol.BlockCypherTransaction
 import org.joda.time.DateTimeConstants
+import org.scalacoin.currency.Satoshis
 import org.scalacoin.protocol.BitcoinAddress
 import org.scalatest.{MustMatchers, FlatSpec}
 import spray.json._
@@ -78,8 +79,8 @@ class BlockCypherTransactionMarshallerTest extends FlatSpec with MustMatchers {
     tx.blockHash must be (Some("00000000000dccabccac0d795b3d3faf11023e01a2de1fd94c6f30db80aba5e8"))
     tx.addresses must be (Seq(BitcoinAddress("mhgDFW3fh6QTm5j1BtUEaUFjregYkqqcNh"),
       BitcoinAddress("mokS58yDd4DwC4AESQavBfP6EVg9TX6jjq"), BitcoinAddress("mtQLgLiqmytKkgE9sVGwypAFsLvkxBQ6XX")))
-    tx.total must be (7554642)
-    tx.fees must be (22679)
+    tx.total must be (Satoshis(7554642))
+    tx.fees must be (Satoshis(22679))
     tx.size must be (225)
     tx.preference must be ("high")
     tx.relayedBy must be ("148.251.92.108:18333")

@@ -2,6 +2,7 @@ package com.blockcypher.api.marshallers
 
 import com.blockcypher.api.protocol.{BlockCypherOutput, BlockCypherInput, BlockCypherTransactionImpl, BlockCypherTransaction}
 import org.joda.time.DateTime
+import org.scalacoin.currency.Satoshis
 import org.scalacoin.marshallers.BitcoinAddressProtocol
 import spray.json._
 import BitcoinAddressProtocol._
@@ -48,7 +49,7 @@ object BlockCypherTransactionMarshaller extends DefaultJsonProtocol with Marshal
       val outputs : Seq[BlockCypherOutput] = obj.fields("outputs").convertTo[Seq[BlockCypherOutput]]
 
       BlockCypherTransactionImpl(blockHash, blockHeight,
-        hash, addressList, total, fees,
+        hash, addressList, Satoshis(total), Satoshis(fees),
         size, preference, relayedBy,
         receivedDateTime, confirmedDateTime, ver, lockTime,
         doubleSpend, vinSize, voutSize,
@@ -63,7 +64,7 @@ object BlockCypherTransactionMarshaller extends DefaultJsonProtocol with Marshal
         blockHashKey -> (if (tx.blockHash.isDefined) JsString(tx.blockHash.get) else JsNull),
         blockHeightKey -> (if(tx.blockHeight.isDefined) JsNumber(tx.blockHeight.get) else JsNull),
         hashKey -> JsString(tx.hash),
-        addressesKey -> addressArray, totalKey -> JsNumber(tx.total), feesKey -> JsNumber(tx.fees),
+        addressesKey -> addressArray, totalKey -> JsNumber(tx.total.value), feesKey -> JsNumber(tx.fees.value),
         sizeKey -> JsNumber(tx.size), preferenceKey -> JsString(tx.preference), relayedByKey -> JsString(tx.relayedBy),
         receivedKey -> JsString(tx.received.toString),
         confirmedKey -> (if(tx.confirmed.isDefined) JsString(tx.confirmed.get.toString) else JsNull),

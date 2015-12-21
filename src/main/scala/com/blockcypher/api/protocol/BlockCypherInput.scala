@@ -1,5 +1,6 @@
 package com.blockcypher.api.protocol
 
+import org.scalacoin.currency.{CurrencyUnit}
 import org.scalacoin.protocol.BitcoinAddress
 
 /**
@@ -8,7 +9,7 @@ import org.scalacoin.protocol.BitcoinAddress
 trait BlockCypherInput {
   def prevHash : String
   def outputIndex : Int
-  def outputValue : Long
+  def outputValue : CurrencyUnit
   def script : String
   def sequence : Long
   def addresses : Seq[BitcoinAddress]
@@ -16,7 +17,7 @@ trait BlockCypherInput {
 }
 
 case class BlockCypherInputImpl(override val prevHash : String, override val outputIndex : Int,
-                                override val outputValue : Long, override val script : String,
+                                override val outputValue : CurrencyUnit, override val script : String,
                                 override val sequence : Long,
                                 override val addresses : Seq[BitcoinAddress], override val scriptType : String)
   extends BlockCypherInput

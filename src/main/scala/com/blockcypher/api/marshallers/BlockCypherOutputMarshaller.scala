@@ -1,6 +1,7 @@
 package com.blockcypher.api.marshallers
 
 import com.blockcypher.api.protocol.{BlockCypherOutputImpl, BlockCypherOutput}
+import org.scalacoin.currency.Satoshis
 import spray.json._
 import org.scalacoin.marshallers.BitcoinAddressProtocol._
 /**
@@ -14,12 +15,12 @@ object BlockCypherOutputMarshaller extends DefaultJsonProtocol with MarshallerUt
       val Seq(value,script,addresses,scriptType) = o.getFields(valueKey,scriptKey,addressesKey,scriptTypeKey)
 
       val convertedAddresses = convertToAddressList(addresses)
-      BlockCypherOutputImpl(value.convertTo[Long], script.convertTo[String],
+      BlockCypherOutputImpl(Satoshis(value.convertTo[Long]), script.convertTo[String],
         convertedAddresses, scriptType.convertTo[String])
     }
 
     override def write(output : BlockCypherOutput) : JsObject = {
-      val m : Map[String,JsValue] = Map(valueKey -> JsNumber(output.value),
+      val m : Map[String,JsValue] = Map(valueKey -> JsNumber(output.value.value),
         scriptKey -> JsString(output.script),  addressesKey -> convertToJsArray(output.addresses),
         scriptTypeKey -> JsString(output.scriptType))
       JsObject(m)

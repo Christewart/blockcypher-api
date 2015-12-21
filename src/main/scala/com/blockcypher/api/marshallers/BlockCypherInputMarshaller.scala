@@ -2,6 +2,7 @@ package com.blockcypher.api.marshallers
 
 
 import com.blockcypher.api.protocol.{BlockCypherInputImpl, BlockCypherInput}
+import org.scalacoin.currency.Satoshis
 import spray.json._
 
 /**
@@ -36,7 +37,7 @@ object  BlockCypherInputMarshaller extends DefaultJsonProtocol with MarshallerUt
     // convert JsArray to List[ BitcoinAdress ]
       val addressList = convertToAddressList(addresses)
       BlockCypherInputImpl(prevHash.convertTo[String], outputIndex.convertTo[Int],
-        outputValue.convertTo[Long],
+        Satoshis(outputValue.convertTo[Long]),
         script.convertTo[String],
         sequence.convertTo[Long],
         addressList, scriptType.convertTo[String])
@@ -49,7 +50,7 @@ object  BlockCypherInputMarshaller extends DefaultJsonProtocol with MarshallerUt
       val m : Map[String,JsValue] = Map(
         prevHashKey -> JsString(input.prevHash),
         outputIndexKey -> JsNumber(input.outputIndex),
-        outputValueKey -> JsNumber(input.outputValue),
+        outputValueKey -> JsNumber(input.outputValue.value),
         scriptKey -> JsString(input.script),
         sequenceKey -> JsNumber(input.sequence),
         addressesKey -> addresses,
