@@ -62,13 +62,4 @@ class BlockCypherEventApiTest extends FlatSpec with MustMatchers
     }
   }
 
-
-  it must "parse a tx-confirmation response from the blockcypher api" in {
-    import com.blockcypher.api.marshallers.BlockCypherEventProtocol._
-    val json = txConfirmationResponse.parseJson
-    val event : BlockCypherEvent = BlockCypherFormat.read(json)
-    event.address.get must be ("mhgDFW3fh6QTm5j1BtUEaUFjregYkqqcNh")
-
-  }
-
 }

@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, MustMatchers}
 class MarshallerUtilTest extends FlatSpec with MustMatchers with MarshallerUtil {
 
   "MarshallerUtil" must "parse a date time correctly from blockcypher" in {
-    val str = "2015-05-22T05:10:00.305308666"
+    val str = "2015-05-22T05:10:00.305Z"
     val dateTime = parseDateTime(str)
     dateTime.getYear must be (2015)
     dateTime.getMonthOfYear must be (DateTimeConstants.MAY)

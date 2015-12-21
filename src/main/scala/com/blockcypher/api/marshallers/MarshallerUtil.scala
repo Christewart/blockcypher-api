@@ -63,7 +63,6 @@ trait MarshallerUtil {
     //need to parse date time of this format
     //2015-05-22T05:10:00.305308666Z
 
-    DateTime.parse(str,DateTimeFormat.forPattern(dateTimePattern))
+    DateTime.parse(str)
   }
-  def dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS"
 }
