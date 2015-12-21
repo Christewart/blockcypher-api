@@ -1,15 +1,13 @@
 package com.blockcypher.api.marshallers
 
-import com.blockcypher.api.events.BlockCypherEventImpl
+
 import com.blockcypher.api.protocol.{BlockCypherInputImpl, BlockCypherInput}
-import org.scalacoin.protocol.BitcoinAddress
 import spray.json._
-import scala.collection.breakOut
 
 /**
  * Created by chris on 12/19/15.
  */
-object  BlockCypherInputMarshaller extends DefaultJsonProtocol {
+object  BlockCypherInputMarshaller extends DefaultJsonProtocol with MarshallerUtil {
 
   implicit object BlockCypherInputFormatter extends RootJsonFormat[BlockCypherInput] {
 
@@ -47,15 +45,14 @@ object  BlockCypherInputMarshaller extends DefaultJsonProtocol {
 
     override def write(input : BlockCypherInput) : JsValue = {
       import org.scalacoin.marshallers.BitcoinAddressProtocol._
-      val addresses : Vector[JsValue] = input.addresses.map(p =>
-        bitcoinAddressFormat.write(p))(breakOut): Vector[JsValue]
+      val addresses : JsArray = convertToJsArray(input.addresses)
       val m : Map[String,JsValue] = Map(
         prevHashKey -> JsString(input.prevHash),
         outputIndexKey -> JsNumber(input.outputIndex),
         outputValueKey -> JsNumber(input.outputValue),
         scriptKey -> JsString(input.script),
         sequenceKey -> JsNumber(input.sequence),
-        addressesKey -> JsArray(addresses),
+        addressesKey -> addresses,
         scriptTypeKey -> JsString(input.scriptType)
       )
 
@@ -63,13 +60,6 @@ object  BlockCypherInputMarshaller extends DefaultJsonProtocol {
 
     }
 
-    private def convertToAddressList(value : JsValue) : Seq[BitcoinAddress] = {
-      value match {
-        case ja: JsArray => {
-          ja.elements.toList.map(e => BitcoinAddress(e.convertTo[String]))
-        }
-        case _ => throw new RuntimeException("This Json type is not valid for parsing a list of bitcoin addresses")
-      }
-    }
+
   }
 }
