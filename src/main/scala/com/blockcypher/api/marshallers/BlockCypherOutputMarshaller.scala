@@ -2,6 +2,7 @@ package com.blockcypher.api.marshallers
 
 import com.blockcypher.api.protocol.{BlockCypherOutputImpl, BlockCypherOutput}
 import spray.json._
+import org.scalacoin.marshallers.BitcoinAddressProtocol._
 /**
  * Created by chris on 12/20/15.
  */
