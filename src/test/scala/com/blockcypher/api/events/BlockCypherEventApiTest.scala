@@ -53,8 +53,9 @@ class BlockCypherEventApiTest extends FlatSpec with MustMatchers
   }
 
   it must "notify us when an address transaction receives another confirmation" in {
+    val callBackUrl = "https://my.domain.com/callbacks/new-tx"
     val address = BitcoinAddress("15qx9ug952GWGTNn7Uiv6vode4RcGrRemh")
-    val result : Future[BlockCypherEvent] = txConfirmation(address)
+    val result : Future[BlockCypherEvent] = txConfirmation(address,callBackUrl)
 
     whenReady(result, timeout(5 seconds), interval(5 millis)) { event =>
       event.address must be (Some(address))

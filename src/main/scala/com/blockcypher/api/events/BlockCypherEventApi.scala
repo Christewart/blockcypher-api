@@ -25,10 +25,9 @@ trait BlockCypherEventApi { this : BlockCypherEnvironment with ActorSystemConfig
    * @param tx
    * @return
    */
-  def txConfirmation(address : BitcoinAddress, numberOfConfirmations : Int = 3) : Future[BlockCypherEvent] = {
-    val callBackUrl = Some("http://test.extrapoint.io/callbacks/tx-confirmation")
+  def txConfirmation(address : BitcoinAddress, callBackUrl : String, numberOfConfirmations : Int = 3) : Future[BlockCypherEvent] = {
     val event = BlockCypherEventImpl(None,"tx-confirmation",None,None,Some(token),Some(address),
-      Some(numberOfConfirmations),None,None,callBackUrl,0)
+      Some(numberOfConfirmations),None,None,Some(callBackUrl),0)
     sendEvent(event)
   }
 
